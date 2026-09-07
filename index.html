@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es-PE">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'none'; form-action 'self' https://formsubmit.co; base-uri 'none'; object-src 'none'" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#743751" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      name="description"
+      content="Un cuento con una sola protagonista: April Kamethsa; mi bautizo y primer añito."
+    />
+    <title>April Kamethsa · Un cuento real</title>
+    <!-- Estilos separados: fuentes, invitación y libro. Edita cada componente en su archivo. -->
+    <link rel="stylesheet" href="src/css/fonts.css" />
+    <link rel="stylesheet" href="src/css/invitation.css" />
+    <link rel="stylesheet" href="src/css/book.css" />
+    <!-- Mantén este orden: configuración, utilidades, vistas, lógica y arranque. -->
+    <script defer src="config/invitation.js"></script>
+    <script defer src="src/js/utils.js"></script>
+    <script defer src="src/js/settings.js"></script>
+    <script defer src="src/js/template.js"></script>
+    <script defer src="src/js/book.js"></script>
+    <script defer src="src/js/effects.js"></script>
+    <script defer src="src/js/rsvp.js"></script>
+    <script defer src="src/js/app.js"></script>
+  </head>
+  <body>
+    <!-- Los datos y textos de la invitación se generan desde config/invitation.js. -->
+    <main id="april-cuento" class="akac-root">
+      <noscript
+        ><div class="akac-fallback">
+          <h1>April Kamethsa</h1>
+          <p>Mi bautizo y primer añito · 22 de noviembre de 2026</p>
+          <p>Bautizo: 11:30 a. m. · Cumpleaños: 1:30 p. m.</p>
+          <p>
+            Activa JavaScript para ver el libro y las animaciones; para
+            confirmar, utiliza el formulario de esta invitación.
+          </p>
+        </div></noscript
+      >
+    </main>
+  </body>
+</html>
