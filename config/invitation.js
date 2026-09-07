@@ -48,7 +48,7 @@ window.APRIL_CONFIG = {
     subtitle: "Mi bautizo y primer añito",
     cover: "assets/images/libro-portada-crema.webp", // Portada completa con marco.
     spine: "assets/images/libro-lomo-crema.webp", // Textura del lomo.
-    image: "", // SOLO EL CENTRO: "assets/images/april.jpg".
+    image: "assets/images/april.jpg", // SOLO EL CENTRO: "assets/images/april.jpg".
     imageAlt: "April, la protagonista de este cuento",
     imagePosition: "50% 50%", // Encuadre horizontal/vertical, ej. "50% 30%".
     duration: 11, // Segundos entre 6 y 20.
