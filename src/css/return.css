@@ -1,0 +1,14 @@
+/* Páginas de retorno y privacidad: mismos tonos y tipografías, sin repetir el libro. */
+:root { color-scheme: light; font-family: "April Sans", sans-serif; color: #47283c; background: #f7f1e8; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 2rem 1rem; min-height: 100svh; display: grid; place-items: center; }
+main { width: min(100%, 44rem); padding: clamp(1.4rem, 5vw, 3.5rem); border: 1px solid #c8a76a; border-radius: 1.5rem; background: #fffaf3; box-shadow: 0 1rem 4rem #74375112; }
+h1 { font-family: "April Serif", Georgia, serif; font-size: clamp(2rem, 7vw, 3.25rem); line-height: 1.1; font-weight: 400; }
+p, li { font-size: 1rem; line-height: 1.7; overflow-wrap: anywhere; }
+a { color: #743751; text-underline-offset: .25em; }
+.eyebrow { font-size: .875rem; letter-spacing: .12em; }
+.button { display: inline-block; background: #743751; color: #fff; padding: 1rem 1.5rem; border-radius: 2rem; text-decoration: none; font-size: 1rem; line-height: 1.4; }
+blockquote { margin: 1.5rem 0; padding: 1rem; background: #f2e8df; border-left: 3px solid #b69758; line-height: 1.7; overflow-wrap: anywhere; }
+button { font: inherit; color: #743751; background: transparent; border: 1px solid #743751; padding: .75rem 1rem; border-radius: 1rem; cursor: pointer; }
+:focus-visible { outline: 3px solid #8c662c; outline-offset: 4px; }
+[hidden] { display: none !important; }

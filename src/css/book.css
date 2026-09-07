@@ -1,0 +1,630 @@
+/* LIBRO CREMA — Cambia aquí el volumen, encuadre, luz y tipografía de la portada.
+   La duración y los movimientos se controlan desde config/invitation.js y book.js.
+   No aplicar filter/opacity/overflow:hidden a .akac-book: aplanan sus caras 3D. */
+/* ESCENA DE ENTRADA: fondo, halo y disposición del libro. */
+.akac-root .akac-intro {
+  --book-width: clamp(265px, 28vw, 345px);
+  --book-exit: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  padding: 35px 20px;
+  overflow: hidden;
+  color: #faead1;
+  background: radial-gradient(
+    ellipse at 50% 44%,
+    #928270 0%,
+    #514943 39%,
+    #2f2b29 77%,
+    #242220 100%
+  );
+  opacity: calc(1 - var(--book-exit));
+}
+
+.akac-root .akac-intro::after {
+  content: "";
+  position: absolute;
+  inset: 17px;
+  border: 1px solid #efd0a02c;
+  pointer-events: none;
+}
+
+.akac-root .akac-intro-heading {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.akac-root .akac-intro-heading > span {
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.32em;
+  color: #f4d8b3;
+}
+
+.akac-root .akac-intro-heading > p {
+  font: italic 19px/1.7 var(--akac-serif);
+  color: #fff1db;
+  margin-top: 7px;
+}
+
+.akac-root .akac-intro-halo {
+  position: absolute;
+  inset: -25%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent,
+    #ffdeb912,
+    transparent 28%,
+    #ffdeb919,
+    transparent 59%,
+    #ffdeb913,
+    transparent 90%
+  );
+  animation: april-light-rays 32s linear infinite;
+  pointer-events: none;
+}
+
+.akac-root .akac-portal {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    #fff5dfff,
+    #fff2d0a8 35%,
+    transparent 75%
+  );
+  opacity: var(--book-exit);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* PERSPECTIVA: dimensiones y encuadre del volumen 3D. */
+.akac-root .akac-book-stage {
+  position: relative;
+  width: var(--book-width);
+  height: calc(var(--book-width) * 1.5);
+  flex-shrink: 0;
+  perspective: 1800px;
+  margin: 2px 0 10px;
+}
+
+.akac-root .akac-book-floor {
+  position: absolute;
+  left: -8%;
+  right: -18%;
+  bottom: -27px;
+  height: 35px;
+  background: #110c08aa;
+  border-radius: 50%;
+  filter: blur(19px);
+  pointer-events: none;
+}
+
+/* VOLUMEN 3D: mantener transform-style: preserve-3d. */
+.akac-root .akac-book {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-24deg) rotateX(5deg) rotateZ(-2deg);
+  will-change: transform;
+}
+
+.akac-root .akac-book-back {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(-25px);
+  background: #e9e1cd;
+  border: 2px solid #af8b51;
+  border-radius: 3px 7px 7px 3px;
+  box-shadow: inset 0 0 0 4px #f5ebd6;
+}
+
+.akac-root .akac-book-paper {
+  position: absolute;
+  inset: 7px 5px 7px 1px;
+  transform: translateZ(7px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #dac7a3;
+  background: linear-gradient(
+    90deg,
+    #a89673 0%,
+    #e3d5b6 4%,
+    #fff8e9 13%,
+    #fbf2dd 93%,
+    #c7b697 100%
+  );
+  color: #754c3d;
+  text-align: center;
+  box-shadow: 0 0 2px #87704d60;
+}
+
+.akac-root .akac-book-paper::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid #c8aa7652;
+  pointer-events: none;
+}
+
+.akac-root .akac-book-paper > span {
+  color: #b08c4d;
+  margin-bottom: 21px;
+}
+
+.akac-root .akac-book-paper > p {
+  font: italic calc(var(--book-width) * 0.066) / 1.5 var(--akac-serif);
+}
+
+.akac-root .akac-book-paper > strong {
+  font: 400 calc(var(--book-width) * 0.22) / 1.3 var(--akac-script);
+  margin-top: 13px;
+}
+
+.akac-root .akac-book-paper > small {
+  font: italic calc(var(--book-width) * 0.052) / 1.7 var(--akac-serif);
+}
+
+.akac-root .akac-book-paper > i {
+  font: normal calc(var(--book-width) * 0.033) / 1.6 var(--akac-sans);
+  letter-spacing: 0.055em;
+  margin-top: 27px;
+  color: #8c7457;
+}
+
+.akac-root .akac-book-edge {
+  position: absolute;
+  background: repeating-linear-gradient(
+    90deg,
+    #eedfc1 0 1px,
+    #b6a285 1.2px 1.7px,
+    #faf0dc 1.9px 3px
+  );
+  border: 1px solid #beac8c;
+}
+
+.akac-root .akac-edge-right {
+  top: 7px;
+  bottom: 7px;
+  width: 46px;
+  right: -18px;
+  transform: rotateY(90deg);
+  transform-origin: center;
+}
+
+.akac-root .akac-edge-top {
+  height: 46px;
+  left: 1px;
+  right: 5px;
+  top: -16px;
+  transform: rotateX(90deg);
+  transform-origin: center;
+  background: repeating-linear-gradient(
+    180deg,
+    #eedfc1 0 1px,
+    #b6a285 1.2px 1.7px,
+    #faf0dc 1.9px 3px
+  );
+}
+
+.akac-root .akac-book-spine {
+  position: absolute;
+  width: 50px;
+  top: 0;
+  bottom: 0;
+  left: -25px;
+  transform: rotateY(-90deg);
+  transform-origin: center;
+  background: #ece2ce;
+  border: 1px solid #b69763;
+  border-radius: 5px;
+  overflow: clip;
+}
+
+.akac-root .akac-book-spine > img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* PORTADA GIRATORIA: el JavaScript modifica su ángulo. */
+.akac-root .akac-book-cover {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(25px);
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  border-radius: 3px 7px 7px 3px;
+  background: #efe7d7;
+  border: 1px solid #bba070;
+  will-change: transform;
+}
+
+.akac-root .akac-cover-front {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: inherit;
+  transform: translateZ(0.5px);
+  background: #f0e9d9;
+  box-shadow: 5px 8px 14px #130e0a4d;
+}
+
+.akac-root .akac-cover-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: inherit;
+  backface-visibility: hidden;
+}
+
+/* TEXTOS EDITABLES DE LA PORTADA: posición y tamaño. */
+.akac-root .akac-cover-title {
+  position: absolute;
+  inset: 75% 19% 7.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #594335;
+  text-align: center;
+  backface-visibility: hidden;
+  text-shadow: 0 1px 1px #fffcf7b0;
+}
+
+.akac-root .akac-cover-title > p {
+  font: 400 calc(var(--book-width) * 0.044) / 1.25 var(--akac-serif);
+  max-width: 100%;
+  color: #5d4330;
+}
+
+.akac-root .akac-cover-title > strong {
+  font: 400 calc(var(--book-width) * 0.11) / 1.15 var(--akac-script);
+  margin: 4px 0 2px;
+  color: #5b4129;
+  white-space: nowrap;
+}
+
+.akac-root .akac-cover-title > span {
+  font: 400 calc(var(--book-width) * 0.029) / 1.5 var(--akac-serif);
+  letter-spacing: 0.025em;
+  color: #755637;
+}
+
+.akac-root .akac-cover-light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    #fffdf63b 0%,
+    transparent 19%,
+    transparent 67%,
+    #bc9a4333 100%
+  );
+  pointer-events: none;
+}
+
+.akac-root .akac-cover-inside {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  border: 6px solid #e7dcc3;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #e9d9b8 0%,
+    #f9f0dd 10%,
+    #fdf5e4 86%,
+    #c8b28a 100%
+  );
+  color: #806043;
+  transform: rotateY(180deg) translateZ(0.6px);
+  backface-visibility: hidden;
+  box-shadow: inset 0 0 0 1px #b7945e;
+}
+
+.akac-root .akac-cover-inside > span {
+  color: #b08b52;
+}
+
+.akac-root .akac-cover-inside > p {
+  font: italic calc(var(--book-width) * 0.066) / 1.65 var(--akac-serif);
+  max-width: 85%;
+}
+
+.akac-root .akac-cover-inside > small {
+  font: 400 calc(var(--book-width) * 0.032) / 1.7 var(--akac-sans);
+  letter-spacing: 0.04em;
+  margin-top: 12px;
+}
+
+/* HOJAS: planos independientes con giro escalonado. */
+.akac-root .akac-leaf {
+  position: absolute;
+  inset: 7px 5px 7px 0;
+  transform-origin: 0% 50%;
+  transform: translateZ(12px);
+  border-radius: 0 5px 5px 0;
+  backface-visibility: visible;
+  background: linear-gradient(
+    90deg,
+    #d0bc94,
+    #fff7e4 10%,
+    #f7ead0 89%,
+    #deccaa
+  );
+  border: 1px solid #d6c3a0;
+  box-shadow: 1px 0 4px #58432224;
+  will-change: transform;
+}
+
+.akac-root .akac-leaf-line {
+  position: absolute;
+  inset: 23px;
+  border: 1px solid #c5a57338;
+}
+
+.akac-root .akac-loading {
+  position: relative;
+  z-index: 5;
+  width: 270px;
+  max-width: 80%;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.akac-root .akac-progress-track {
+  height: 1px;
+  width: 100%;
+  background: #efd4a738;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.akac-root .akac-progress-track > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #f5d697;
+  transform: scaleX(0);
+  transform-origin: left center;
+  box-shadow: 0 0 5px #ffdaa1;
+}
+
+.akac-root .akac-loading > p {
+  font: italic 17px/1.6 var(--akac-serif);
+  color: #fcebd0;
+}
+
+.akac-root .akac-book-step {
+  display: block;
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 0.2em;
+  color: #e7c69d;
+  margin-top: 8px;
+}
+
+.akac-root .akac-skip {
+  position: relative;
+  z-index: 5;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-bottom: 1px solid #f7d6ab44;
+  background: transparent;
+  color: #fff1dd;
+  font-size: 12px;
+  padding: 7px 0;
+}
+
+.akac-root .akac-intro :focus-visible {
+  outline: 2px solid #ffe3ae;
+  outline-offset: 5px;
+}
+
+.akac-root.akac-opening {
+  height: var(--akac-intro-height, 100svh);
+  overflow: hidden;
+}
+
+.akac-root.akac-opening .akac-invitation {
+  opacity: 0;
+}
+
+.akac-root.akac-opening.akac-revealing .akac-invitation {
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+.akac-root .akac-sparkles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1002;
+  pointer-events: none;
+}
+
+.akac-root .akac-intro[hidden] {
+  display: none !important;
+}
+
+@keyframes april-light-rays {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .akac-root .akac-intro {
+    --book-width: min(292px, 67vw);
+    gap: 24px;
+    padding: 24px 15px;
+  }
+
+  .akac-root .akac-intro-heading > span {
+    font-size: 9px;
+  }
+
+  .akac-root .akac-intro-heading > p {
+    font-size: 17px;
+    margin-top: 6px;
+  }
+
+  .akac-root .akac-book-stage {
+    margin: 8px 0 15px;
+    perspective: 1300px;
+  }
+
+  .akac-root .akac-loading {
+    width: 230px;
+  }
+
+  .akac-root .akac-loading > p {
+    font-size: 16px;
+  }
+
+  .akac-root .akac-cover-title > strong {
+    font-size: calc(var(--book-width) * 0.106);
+  }
+
+  .akac-root .akac-book-spine {
+    width: 50px;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 701px) {
+  .akac-root .akac-intro {
+    --book-width: min(305px, 39vh);
+    gap: 20px;
+    padding: 25px;
+  }
+
+  .akac-root .akac-intro-heading > p {
+    font-size: 17px;
+  }
+
+  .akac-root .akac-loading > p {
+    font-size: 16px;
+  }
+}
+
+@media (max-height: 660px) {
+  .akac-root .akac-intro {
+    --book-width: min(235px, 38vh);
+    gap: 13px;
+    padding: 20px;
+  }
+
+  .akac-root .akac-intro-heading > p {
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  .akac-root .akac-intro-heading > span {
+    font-size: 8px;
+  }
+
+  .akac-root .akac-book-stage {
+    margin: 0 0 3px;
+  }
+
+  .akac-root .akac-loading {
+    width: 210px;
+  }
+
+  .akac-root .akac-loading > p {
+    font-size: 14px;
+  }
+
+  .akac-root .akac-progress-track {
+    margin-bottom: 10px;
+  }
+
+  .akac-root .akac-book-step {
+    font-size: 8px;
+    margin-top: 4px;
+  }
+
+  .akac-root .akac-skip {
+    min-height: 32px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akac-root .akac-intro-halo {
+    animation: none;
+  }
+}
+
+@media (max-height: 480px) {
+  .akac-root .akac-intro {
+    --book-width: min(180px, 39vh);
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .akac-root .akac-intro-heading > p,
+  .akac-root .akac-book-step {
+    display: none;
+  }
+
+  .akac-root .akac-loading > p {
+    font-size: 12px;
+  }
+
+  .akac-root .akac-loading {
+    margin: 0;
+  }
+
+  .akac-root .akac-progress-track {
+    margin-bottom: 6px;
+  }
+}
+
+/* ADAPTACIÓN: este bloque modifica el diseño según pantalla o preferencias. */
+@media print {
+  .akac-root .akac-intro {
+    display: none !important;
+  }
+}
+
+/* FOTO REEMPLAZABLE DEL LIBRO.
+ * Coordenadas del interior del óvalo de la portada incluida. El marco no cambia.
+ * Si usas otra portada COMPLETA, ajusta estas cuatro medidas a su propio marco.
+ * El encuadre de la foto se cambia en config/invitation.js > book.imagePosition.
+ * No apliques filtros ni opacity al contenedor .akac-book: aplanarían el 3D.
+ */
+.akac-root .akac-cover-photo {
+  position: absolute;
+  left: 22.3%;
+  top: 18.1%;
+  width: 55.4%;
+  height: 48.6%;
+  object-fit: cover;
+  border-radius: 50%;
+  clip-path: ellipse(50% 50% at 50% 50%);
+  backface-visibility: hidden;
+}
