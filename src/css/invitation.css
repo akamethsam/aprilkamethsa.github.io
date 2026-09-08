@@ -124,6 +124,7 @@
   align-items: center;
   gap: 13px;
   font: 30px/1 var(--akac-serif);
+  white-space: nowrap;
 }
 
 .akac-root .akac-monogram em {
@@ -268,12 +269,21 @@
   box-shadow: 0 12px 30px #7236502c;
 }
 
+/* FECHA DESTACADA: se conserva la paleta original, pero ahora funciona como sello visual. */
 .akac-root .akac-hero-date {
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  line-height: 1.8;
-  margin-top: 25px;
-  color: #744b58;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 15px/1.45 var(--akac-sans);
+  letter-spacing: 0.2em;
+  margin-top: 27px;
+  padding: 10px 18px;
+  color: #6f344c;
+  border: 1.5px solid #aa7c4288;
+  border-radius: 999px;
+  background: #fffaf3d9;
+  box-shadow: 0 8px 22px #6f344c12, inset 0 0 0 1px #ffffffcc;
+  text-shadow: 0 0 0.01px currentColor;
 }
 
 .akac-root .akac-hero-date > span {
@@ -380,7 +390,7 @@
 }
 
 .akac-root .akac-date-display > span {
-  font: 400 20px/1.5 var(--akac-serif);
+  font: 600 22px/1.5 var(--akac-serif);
   width: 139px;
   text-transform: capitalize;
   text-align: right;
@@ -397,10 +407,11 @@
 }
 
 .akac-root .akac-date-display > strong {
-  font: 400 92px/1 var(--akac-serif);
-  border-inline: 1px solid #bf9b7550;
-  padding: 0 35px;
-  color: #874861;
+  font: 700 104px/0.95 var(--akac-serif);
+  border-inline: 1.5px solid #b889585f;
+  padding: 4px 38px 8px;
+  color: #7f3d58;
+  text-shadow: 0 5px 18px #74375113;
 }
 
 .akac-root .akac-countdown {
@@ -439,12 +450,13 @@
   color: var(--akac-muted);
 }
 
+/* TRES MOMENTOS: bautizo y cumpleaños conservan hora; el corte de pelo no muestra horario. */
 .akac-root .akac-events {
   display: grid;
-  grid-template-columns: 1fr 40px 1fr;
+  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr) 30px minmax(0, 1fr);
   align-items: center;
-  gap: 30px;
-  max-width: 960px;
+  gap: 18px;
+  max-width: 1180px;
   margin: 66px auto 0;
 }
 
@@ -471,6 +483,30 @@
 .akac-root .akac-event:hover {
   transform: translateY(-5px);
   background: #f8ece773;
+}
+
+.akac-root .akac-event--haircut {
+  border-inline: 1px solid #b8925c45;
+  background: linear-gradient(180deg, #fbf1e9a8, #f8ece752 70%, transparent);
+  box-shadow: 0 14px 34px #81503d0d;
+}
+
+.akac-root .akac-event--haircut .akac-event-icon {
+  width: 54px;
+  height: 54px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #b58b515d;
+  border-radius: 50%;
+  background: #fffaf2cc;
+  box-shadow: 0 7px 20px #a57a3b16;
+}
+
+.akac-root .akac-haircut-note {
+  margin: 28px auto 0;
+  color: #9a7040;
+  font: 700 10px/1.6 var(--akac-sans);
+  letter-spacing: 0.2em;
 }
 
 .akac-root .akac-event-number {
@@ -994,7 +1030,12 @@
   }
 
   .akac-root .akac-events {
-    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .akac-root .akac-events-divider {
+    display: none;
   }
 }
 
@@ -1006,6 +1047,11 @@
 
   .akac-root .akac-monogram {
     gap: 8px;
+    min-width: 0;
+  }
+
+  .akac-root .akac-monogram > span {
+    font-size: 20px;
   }
 
   .akac-root .akac-monogram em {
@@ -1096,9 +1142,10 @@
   }
 
   .akac-root .akac-hero-date {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    margin-top: 17px;
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    margin-top: 19px;
+    padding: 9px 13px;
   }
 
   .akac-root .akac-year-stamp {
@@ -1159,8 +1206,8 @@
   }
 
   .akac-root .akac-date-display > span {
-    font-size: 17px;
-    width: 95px;
+    font-size: 18px;
+    width: 96px;
   }
 
   .akac-root .akac-date-display > span > small {
@@ -1168,8 +1215,8 @@
   }
 
   .akac-root .akac-date-display > strong {
-    font-size: 72px;
-    padding: 0 22px;
+    font-size: 78px;
+    padding: 2px 23px 6px;
   }
 
   .akac-root .akac-countdown {
@@ -1220,6 +1267,10 @@
   .akac-root .akac-time {
     font-size: 28px;
     margin: 18px 0 8px;
+  }
+
+  .akac-root .akac-haircut-note {
+    margin-top: 22px;
   }
 
   .akac-root .akac-events-divider {
@@ -1371,8 +1422,8 @@
   }
 
   .akac-root .akac-date-display > strong {
-    font-size: 64px;
-    padding: 0 17px;
+    font-size: 68px;
+    padding: 1px 18px 5px;
   }
 
   .akac-root .akac-date-display > span {

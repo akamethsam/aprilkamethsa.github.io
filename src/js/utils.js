@@ -91,6 +91,7 @@
       pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
       crown: '<path d="m3 6 4.5 4L12 3l4.5 7L21 6l-2 12H5L3 6Zm2 15h14"/>',
       cross: '<path d="M12 3v18M6 8h12"/>',
+      scissors: '<circle cx="6" cy="7" r="3"/><circle cx="6" cy="17" r="3"/><path d="m8.7 8.3 10.6 6.4M8.7 15.7 19.3 9.3"/>',
       check: '<path d="m5 12 4 4L19 6"/>',
       replay: '<path d="M3 10a9 9 0 1 1 2 8M3 3v7h7"/>',
       pause: '<path d="M8 5v14M16 5v14"/>',

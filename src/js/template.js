@@ -33,7 +33,7 @@
       `<p class="akac-place">${esc(title || "Lugar por confirmar")}</p>${address ? `<p class="akac-address">${esc(address)}</p>` : ""}${safeURL(map) ? `<a class="akac-map" href="${esc(safeURL(map))}" target="_blank" rel="noopener noreferrer">${icon("pin", 18)} Cómo llegar ${icon("arrow", 16)}</a>` : ""}`;
     root.innerHTML = `<canvas class="akac-sparkles" aria-hidden="true"></canvas>${A.bookMarkup(c, prefix)}
       <div class="akac-invitation">
-        <header class="akac-nav"><a href="#${prefix("home")}" class="akac-monogram" aria-label="Volver al inicio de la invitación">${icon("crown", 21)}<span>${esc((c.name || "April").charAt(0))}<em>MI PRIMER AÑITO</em></span></a><a class="akac-nav-rsvp" href="#${prefix("rsvp")}">Confirmar asistencia ${icon("arrow", 17)}</a></header>
+        <header class="akac-nav"><a href="#${prefix("home")}" class="akac-monogram" aria-label="Volver al inicio de la invitación">${icon("crown", 21)}<span>${name}<em>MI PRIMER AÑITO</em></span></a><a class="akac-nav-rsvp" href="#${prefix("rsvp")}">Confirmar asistencia ${icon("arrow", 17)}</a></header>
         <section class="akac-hero" id="${prefix("home")}" aria-labelledby="${prefix("name")}">
           <div class="akac-landscape"><img class="akac-castle" src="${esc(heroAsset)}" alt="Castillo de cuento rosa y marfil entre nubes y jardines, sin personajes" fetchpriority="high" decoding="async"></div>
           <div class="akac-hero-wash" aria-hidden="true"></div>
@@ -50,16 +50,19 @@
         </section>
         <section class="akac-chapter akac-reveal" id="${prefix("day")}" aria-labelledby="${prefix("day-title")}">
           ${background("chapter")}
-          <div class="akac-chapter-top">${icon("star", 20)}<span>UN DÍA, DOS MOMENTOS INOLVIDABLES</span>${icon("star", 20)}</div>
+          <div class="akac-chapter-top">${icon("star", 20)}<span>UN DÍA, TRES MOMENTOS INOLVIDABLES</span>${icon("star", 20)}</div>
           <h2 id="${prefix("day-title")}">La magia tiene una fecha</h2>
-          <p class="akac-chapter-copy">Primero, una bendición para mi vida; después, la alegría de celebrar mi primer año.</p>
+          <p class="akac-chapter-copy">Primero, una bendición para mi vida; después, un momento especial para recordar; y finalmente, la alegría de celebrar mi primer año.</p>
           <div class="akac-date-display"><span>${esc(weekday)}</span><strong>${day}</strong><span>${esc(month)}<small>${year}</small></span></div>
           <div class="akac-countdown" aria-label="Tiempo que falta para el bautizo"><div><strong data-unit="days">—</strong><span>DÍAS</span></div><i>:</i><div><strong data-unit="hours">—</strong><span>HORAS</span></div><i>:</i><div><strong data-unit="minutes">—</strong><span>MINUTOS</span></div><i>:</i><div><strong data-unit="seconds">—</strong><span>SEGUNDOS</span></div></div>
           <p class="akac-countdown-caption">La cuenta regresiva para comenzar nuestro día</p>
           <div class="akac-events">
             <article class="akac-event akac-reveal"><div class="akac-event-number">CAPÍTULO I</div><span class="akac-event-icon">${icon("cross", 30)}</span><h3>Mi bautizo</h3><p class="akac-event-line">Una bendición que me acompañará siempre</p><p class="akac-time">${esc(timeText(c.baptismTime || "11:30"))}</p>${venue(c.baptismVenue, c.baptismAddress, c.baptismMap)}</article>
-            <div class="akac-events-divider" aria-hidden="true">${icon("star", 24)}</div>
-            <article class="akac-event akac-reveal"><div class="akac-event-number">CAPÍTULO II</div><span class="akac-event-icon">${icon("crown", 32)}</span><h3>Mi primer añito</h3><p class="akac-event-line">Un castillo lleno de risas y mucho amor</p><p class="akac-time">${esc(timeText(c.birthdayTime || "13:30"))}</p>${venue(c.birthdayVenue, c.birthdayAddress, c.birthdayMap)}</article>
+            <div class="akac-events-divider" aria-hidden="true">${icon("star", 22)}</div>
+            <!-- El corte de pelo es parte del día, pero no tiene un horario independiente. -->
+            <article class="akac-event akac-event--haircut akac-reveal"><div class="akac-event-number">CAPÍTULO II</div><span class="akac-event-icon">${icon("scissors", 32)}</span><h3>Corte de pelo</h3><p class="akac-event-line">Un pequeño gran momento para recordar toda la vida</p><p class="akac-haircut-note">UN RECUERDO PARA SIEMPRE</p></article>
+            <div class="akac-events-divider" aria-hidden="true">${icon("star", 22)}</div>
+            <article class="akac-event akac-reveal"><div class="akac-event-number">CAPÍTULO III</div><span class="akac-event-icon">${icon("crown", 32)}</span><h3>Mi primer añito</h3><p class="akac-event-line">Un castillo lleno de risas y mucho amor</p><p class="akac-time">${esc(timeText(c.birthdayTime || "13:30"))}</p>${venue(c.birthdayVenue, c.birthdayAddress, c.birthdayMap)}</article>
           </div>
         </section>
         <section class="akac-story akac-reveal" aria-label="Una invitación especial">${background("story")}<div class="akac-story-rule" aria-hidden="true"></div>${photo ? `<img class="akac-portrait" src="${esc(photo)}" alt="${name}" loading="lazy" decoding="async">` : icon("crown", 36)}<p>${esc(c.message || "En este cuento hay un castillo, muchos sueños y una sola protagonista; pero la magia estará completa cuando tú estés aquí.")}</p><span>CON CARIÑO, MI FAMILIA</span><div class="akac-story-rule" aria-hidden="true"></div></section>
