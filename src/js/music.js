@@ -40,6 +40,100 @@
   // Referencia pública para futuras funciones (por ejemplo, un botón Música/Silencio).
   window.APRIL_AUDIO = audio;
 
+  /**
+ * ----------------------------------------------------------
+ * BOTÓN REPRODUCIR / PAUSAR
+ * ----------------------------------------------------------
+ */
+
+function connectMusicButton() {
+  const button = document.getElementById("akac-music-toggle");
+
+  // Si todavía no existe el botón, esperamos un poco.
+  if (!button) {
+    setTimeout(connectMusicButton, 300);
+    return;
+  }
+
+  /**
+   * Actualiza el aspecto del botón según
+   * la música esté sonando o esté pausada.
+   */
+  function updateButton() {
+    const icon = button.querySelector(".akac-music-icon");
+
+    if (!icon) return;
+
+    if (audio.paused) {
+      // Música detenida.
+      icon.textContent = "♪";
+
+      button.setAttribute(
+        "aria-label",
+        "Reproducir música"
+      );
+
+      button.classList.add("is-paused");
+      button.classList.remove("is-playing");
+
+    } else {
+      // Música reproduciéndose.
+      icon.textContent = "❚❚";
+
+      button.setAttribute(
+        "aria-label",
+        "Pausar música"
+      );
+
+      button.classList.add("is-playing");
+      button.classList.remove("is-paused");
+    }
+  }
+
+  /**
+   * Cuando el visitante toca el botón.
+   */
+  button.addEventListener("click", async (event) => {
+
+    // Evita que este clic afecte otras animaciones.
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (audio.paused) {
+
+      // REPRODUCIR
+      try {
+        await audio.play();
+      } catch (error) {
+        console.warn(
+          "APRIL MUSIC: No fue posible reproducir la música.",
+          error
+        );
+      }
+
+    } else {
+
+      // PAUSAR
+      audio.pause();
+    }
+
+    updateButton();
+  });
+
+  /**
+   * Sincronización automática.
+   */
+  audio.addEventListener("play", updateButton);
+  audio.addEventListener("pause", updateButton);
+
+  updateButton();
+}
+
+/**
+ * Intentamos conectar el botón.
+ */
+connectMusicButton();
+
   let playPromise = null;
 
   /**
