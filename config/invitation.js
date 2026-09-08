@@ -13,8 +13,8 @@ window.APRIL_CONFIG = {
   date: "2026-11-22", // año-mes-día
   dateProvisional: true, // Aviso en el taller, invisible para los invitados.
   timezoneOffset: "-05:00", // Hora de Perú.
-  baptismTime: "11:30", // 11:30 a. m. (formato de 24 horas).
-  birthdayTime: "13:30", // 1:30 p. m.
+  baptismTime: "10:30", // 11:30 a. m. (formato de 24 horas).
+  birthdayTime: "12:30", // 1:30 p. m.
 
   // 02 · LUGARES. Los mapas son enlaces opcionales HTTP/HTTPS.
   baptismVenue: "Lugar por confirmar",
