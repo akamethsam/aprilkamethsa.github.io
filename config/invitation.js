@@ -20,9 +20,9 @@ window.APRIL_CONFIG = {
   baptismVenue: "Lugar por confirmar",
   baptismAddress: "",
   baptismMap: "",
-  birthdayVenue: "Lugar por confirmar",
+  birthdayVenue: "Salon de eventos 'Alameda Real' ",
   birthdayAddress: "",
-  birthdayMap: "",
+  birthdayMap: "https://maps.app.goo.gl/AH9j7coXYSEvN8wG6",
 
   // 03 · TEXTOS. Escribe texto normal, sin etiquetas HTML.
   intro:
