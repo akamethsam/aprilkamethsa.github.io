@@ -82,4 +82,12 @@ window.APRIL_CONFIG = {
     declineMessage:
       "Hola, soy {nombre}. Esta vez no podré asistir a {evento}. Gracias por invitarme.",
   },
+
+  // 08 · MÚSICA DE FONDO
+music: {
+  enabled: true,
+  src: "assets/audio/musica-april.mp3",
+  volume: 0.35,
+  loop: true
+},
 };
