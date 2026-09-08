@@ -95,6 +95,6 @@
         </section>
         <footer class="akac-footer">${icon("crown", 27)}<p>Los cuentos más bonitos se viven en familia</p><span>${name} · ${day} de ${esc(month)} de ${year}</span><button type="button" class="akac-replay">${icon("replay", 16)} Volver a abrir el libro</button></footer>
       </div>
-      <button class="akac-motion-toggle" type="button" aria-pressed="${paused}" aria-label="${paused ? "Activar animaciones" : "Pausar animaciones"}">${icon(paused ? "play" : "pause", 16)}<span>${paused ? "Animar" : "Pausar"}</span></button>`;
+      <button class="akac-motion-toggle" type="button"   id="akac-music-toggle" aria-pressed="${paused}" aria-label="${paused ? "Activar animaciones" : "Pausar animaciones"}">${icon(paused ? "play" : "pause", 16)}<span>${paused ? "Animar" : "Pausar"}</span></button>`;
   };
 })(window.April);
