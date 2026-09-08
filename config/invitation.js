@@ -83,13 +83,16 @@ window.APRIL_CONFIG = {
       "Hola, soy {nombre}. Esta vez no podré asistir a {evento}. Gracias por invitarme.",
   },
 
-  // 08 · MÚSICA DE FONDO
-    music: {
-  enabled: true,
-  src: "assets/audio/princesse.mp3",
-  volume: 0.35,
-  loop: true,
-},
-  
+  // 08 · MÚSICA DE FONDO.
+  // startWithBook: true hace que el visitante toque el libro y, en ese mismo gesto,
+  // comiencen la música y la apertura. Así evitamos el bloqueo de autoplay del navegador.
+  music: {
+    enabled: true,
+    src: "assets/audio/princesse.mp3",
+    volume: 0.35,
+    loop: true,
+    startWithBook: true,
+  },
+
 
 };

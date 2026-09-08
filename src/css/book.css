@@ -628,3 +628,121 @@
   clip-path: ellipse(50% 50% at 50% 50%);
   backface-visibility: hidden;
 }
+
+/* APERTURA CON MÚSICA.
+ * El navegador necesita un gesto del usuario para permitir audio con sonido.
+ * Este botón mantiene el libro cerrado hasta que el invitado lo toca. */
+.akac-root .akac-open-book {
+  position: relative;
+  z-index: 6;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 20px;
+  border: 1px solid #f2d2a869;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff6e81c, #f1cc9810);
+  color: #fff1dd;
+  box-shadow: 0 10px 30px #120b0730, inset 0 0 0 1px #fff7e811;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.akac-root .akac-open-book:hover {
+  transform: translateY(-2px);
+  border-color: #f5d59db3;
+  background: linear-gradient(180deg, #fff6e827, #f1cc9818);
+}
+
+.akac-root .akac-open-book:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.akac-root .akac-open-book-icon {
+  width: 35px;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #f3d19f6e;
+  border-radius: 50%;
+  color: #f8d69d;
+  background: #20171338;
+}
+
+.akac-root .akac-open-book > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.akac-root .akac-open-book strong {
+  font: 400 15px/1.3 var(--akac-serif);
+  letter-spacing: 0.025em;
+}
+
+.akac-root .akac-open-book small {
+  font: 400 9px/1.4 var(--akac-sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e5c49a;
+}
+
+.akac-root.akac-awaiting-open {
+  height: var(--akac-intro-height, 100svh);
+  overflow: hidden;
+}
+
+.akac-root.akac-awaiting-open .akac-invitation {
+  opacity: 0;
+}
+
+.akac-root.akac-awaiting-open .akac-open-book {
+  display: inline-flex;
+}
+
+.akac-root.akac-awaiting-open .akac-loading {
+  display: none;
+}
+
+.akac-root.akac-awaiting-open .akac-skip {
+  opacity: 0.7;
+}
+
+@media (max-width: 700px) {
+  .akac-root .akac-open-book {
+    min-height: 54px;
+    padding: 9px 16px;
+    max-width: min(330px, 88vw);
+  }
+
+  .akac-root .akac-open-book strong {
+    font-size: 14px;
+  }
+}
+
+@media (max-height: 660px) {
+  .akac-root .akac-open-book {
+    min-height: 46px;
+    padding: 7px 14px;
+  }
+
+  .akac-root .akac-open-book-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .akac-root .akac-open-book small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akac-root .akac-open-book {
+    transition: none;
+  }
+}

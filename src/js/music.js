@@ -1,169 +1,92 @@
 /**
  * APRIL · MÚSICA DE FONDO
- * ------------------------------------------------------------
- * Este archivo controla exclusivamente la música de la invitación.
+ * --------------------------------------------------------------------------
+ * La música se inicia desde la apertura del libro, no desde un autoplay suelto.
+ * Esto es importante porque Chrome, Safari, iPhone y Android suelen bloquear
+ * el audio con sonido cuando la página intenta reproducirlo sin interacción.
  *
- * IMPORTANTE:
- * Los navegadores modernos bloquean la reproducción automática
- * con sonido hasta que el visitante interactúa con la página.
- *
- * Por ello:
- * 1. Intentamos reproducir la música al cargar.
- * 2. Si el navegador la bloquea, esperamos el primer clic,
- *    toque de pantalla o pulsación de teclado.
- * 3. Después de esa interacción, la música comienza.
- * ------------------------------------------------------------
+ * Flujo normal:
+ * 1) El libro aparece cerrado.
+ * 2) El invitado toca "Toca para abrir nuestro cuento".
+ * 3) Ese mismo gesto llama a playFromBook().
+ * 4) Comienzan princesse.mp3 y la animación del libro.
+ * --------------------------------------------------------------------------
  */
-
 (() => {
   "use strict";
 
-  // Obtenemos la configuración principal de la invitación.
   const config = window.APRIL_CONFIG;
+  const music = config && config.music;
 
-  // Si no existe configuración de música, no hacemos nada.
-  if (!config || !config.music) {
-    console.warn("APRIL MUSIC: No existe configuración de música.");
+  if (!music || !music.enabled || !music.src) {
+    window.APRIL_MUSIC = {
+      enabled: false,
+      playFromBook: () => Promise.resolve(false),
+      pause: () => {},
+      isPlaying: () => false,
+    };
     return;
   }
 
-  // Si la música está desactivada, detenemos la inicialización.
-  if (!config.music.enabled) {
-    console.info("APRIL MUSIC: Música desactivada.");
-    return;
-  }
-
-  // Si no existe una ruta de audio, tampoco continuamos.
-  if (!config.music.src) {
-    console.warn("APRIL MUSIC: No se indicó ningún archivo de audio.");
-    return;
-  }
-
-  /**
-   * Creamos el reproductor.
-   */
-  const audio = new Audio();
-
-  // Archivo MP3.
-  audio.src = config.music.src;
-
-  // Precargamos parte del archivo.
+  const audio = new Audio(music.src);
   audio.preload = "auto";
+  audio.loop = music.loop !== false;
 
-  // Repetición de la música.
-  audio.loop = config.music.loop !== false;
-
-  // Volumen.
-  // Si no está definido, utilizamos 0.35.
-  const configuredVolume = Number(config.music.volume);
-
+  const configuredVolume = Number(music.volume);
   audio.volume = Number.isFinite(configuredVolume)
     ? Math.min(1, Math.max(0, configuredVolume))
     : 0.35;
 
-  /**
-   * Guardamos una referencia global.
-   *
-   * Esto permite utilizar el reproductor posteriormente
-   * desde otros archivos si queremos crear un botón
-   * de Música / Silencio.
-   */
+  // Referencia pública para futuras funciones (por ejemplo, un botón Música/Silencio).
   window.APRIL_AUDIO = audio;
 
-  /**
-   * Evita ejecutar varios intentos simultáneamente.
-   */
-  let started = false;
+  let playPromise = null;
 
   /**
-   * Intenta reproducir la canción.
+   * Reproduce la canción. Debe llamarse durante el gesto que abre el libro para
+   * que los navegadores móviles reconozcan la reproducción como autorizada.
    */
-  async function playMusic() {
-    // Si ya está reproduciéndose, no hacemos nada.
-    if (!audio.paused) {
-      started = true;
-      removeInteractionListeners();
-      return;
-    }
+  function playFromBook() {
+    if (!audio.paused) return Promise.resolve(true);
+    if (playPromise) return playPromise;
 
-    try {
-      await audio.play();
+    playPromise = audio
+      .play()
+      .then(() => {
+        console.info("APRIL MUSIC: música iniciada con la apertura del libro.");
+        return true;
+      })
+      .catch((error) => {
+        console.info(
+          "APRIL MUSIC: el navegador no permitió iniciar el audio todavía.",
+          error,
+        );
+        return false;
+      })
+      .finally(() => {
+        playPromise = null;
+      });
 
-      started = true;
-
-      console.info("APRIL MUSIC: Música iniciada.");
-
-      // Una vez conseguida la reproducción,
-      // ya no necesitamos escuchar el primer clic.
-      removeInteractionListeners();
-    } catch (error) {
-      /**
-       * Esto NO necesariamente significa que haya un error.
-       *
-       * Chrome/Safari suelen devolver NotAllowedError
-       * cuando el usuario todavía no ha interactuado.
-       */
-      console.info(
-        "APRIL MUSIC: El navegador espera una interacción del usuario.",
-        error
-      );
-    }
+    return playPromise;
   }
 
-  /**
-   * Cuando exista la primera interacción,
-   * iniciamos la música.
-   */
-  function firstInteraction() {
-    if (started) return;
-
-    playMusic();
+  function pause() {
+    audio.pause();
   }
 
-  /**
-   * Quitamos los listeners después de iniciar correctamente.
-   */
-  function removeInteractionListeners() {
-    document.removeEventListener("pointerdown", firstInteraction);
-    document.removeEventListener("touchstart", firstInteraction);
-    document.removeEventListener("click", firstInteraction);
-    document.removeEventListener("keydown", firstInteraction);
-  }
-
-  /**
-   * Escuchamos distintas formas de interacción.
-   *
-   * pointerdown funciona para mouse y muchos dispositivos táctiles.
-   */
-  document.addEventListener("pointerdown", firstInteraction, {
-    passive: true,
-  });
-
-  document.addEventListener("touchstart", firstInteraction, {
-    passive: true,
-  });
-
-  document.addEventListener("click", firstInteraction);
-
-  document.addEventListener("keydown", firstInteraction);
-
-  /**
-   * También intentamos reproducir inmediatamente.
-   *
-   * En algunos casos el navegador lo permitirá,
-   * pero normalmente la primera visita necesitará interacción.
-   */
-  playMusic();
-
-  /**
-   * Información útil si el archivo no existe
-   * o GitHub Pages devuelve un error.
-   */
   audio.addEventListener("error", () => {
     console.error(
-      "APRIL MUSIC: No se pudo cargar el archivo:",
-      config.music.src,
-      audio.error
+      "APRIL MUSIC: no se pudo cargar el archivo:",
+      music.src,
+      audio.error,
     );
   });
+
+  window.APRIL_MUSIC = {
+    enabled: true,
+    audio,
+    playFromBook,
+    pause,
+    isPlaying: () => !audio.paused,
+  };
 })();

@@ -30,6 +30,10 @@
           <div class="akac-book-spine"><img src="${e(c.book.spine)}" alt="" aria-hidden="true" decoding="async"></div>
         </div>
       </div>
+      <button class="akac-open-book" type="button" aria-label="Abrir el cuento e iniciar la música">
+        <span class="akac-open-book-icon" aria-hidden="true">${A.icon("play", 16)}</span>
+        <span><strong>Toca para abrir nuestro cuento</strong><small>La música comenzará al abrirlo</small></span>
+      </button>
       <div class="akac-loading"><div class="akac-progress-track" aria-hidden="true"><span></span></div><p role="status" aria-live="polite">Un cuento escrito con amor…</p><span class="akac-book-step" aria-hidden="true">01 · EL COMIENZO</span></div>
       <button class="akac-skip" type="button">Entrar a la invitación ${A.icon("arrow", 16)}</button>
     </div>`;
@@ -73,8 +77,10 @@
     const progress = $(".akac-progress-track>span"),
       status = $(".akac-loading>p"),
       step = $(".akac-book-step");
-    const skip = $(".akac-skip");
+    const skip = $(".akac-skip"),
+      openBook = $(".akac-open-book");
     let active = false,
+      awaitingOpen = false,
       paused = false,
       raf = 0,
       elapsed = 0,
@@ -131,7 +137,12 @@
       clearTimeout(assetTimer);
       intro.hidden = true;
       intro.style.removeProperty("--book-exit");
-      root.classList.remove("akac-opening", "akac-revealing");
+      awaitingOpen = false;
+      root.classList.remove(
+        "akac-opening",
+        "akac-revealing",
+        "akac-awaiting-open",
+      );
       root.classList.add("akac-entered");
       root.style.removeProperty("--akac-intro-height");
       invitation.inert = false;
@@ -163,8 +174,41 @@
         raf = requestAnimationFrame(tick);
     }
 
+    // Muestra el libro cerrado y espera un gesto real del invitado. Ese gesto
+    // permite iniciar el audio con sonido en navegadores móviles.
+    function prepare() {
+      epoch++;
+      cancelAnimationFrame(raf);
+      raf = 0;
+      clearTimeout(assetTimer);
+      if (removed) return;
+      if (!options.motionEnabled()) {
+        finish();
+        return;
+      }
+      active = false;
+      awaitingOpen = true;
+      paused = false;
+      elapsed = 0;
+      last = 0;
+      phase = "";
+      intro.hidden = false;
+      openBook.disabled = false;
+      root.classList.remove("akac-entered", "akac-revealing", "akac-opening");
+      root.classList.add("akac-awaiting-open");
+      root.style.setProperty("--akac-intro-height", `${window.innerHeight}px`);
+      invitation.inert = true;
+      root.scrollIntoView({ behavior: "instant", block: "start" });
+      draw(0);
+      status.textContent = "Toca el libro para comenzar…";
+      step.textContent = "01 · EL COMIENZO";
+      requestAnimationFrame(() => {
+        if (awaitingOpen && !removed) openBook.focus({ preventScroll: true });
+      });
+    }
+
     // Reinicia la secuencia. El contador epoch invalida aperturas antiguas pendientes.
-    async function start(manual = false) {
+    async function start(manual = false, userGesture = false) {
       epoch++;
       const generation = epoch;
       cancelAnimationFrame(raf);
@@ -175,14 +219,22 @@
         finish();
         return;
       }
+      // Se llama antes de cualquier await para conservar el permiso del gesto.
+      if (options.onStart) options.onStart({ userGesture: userGesture || manual });
       previousFocus = manual ? document.activeElement : null;
+      awaitingOpen = false;
+      openBook.disabled = true;
       active = true;
       paused = false;
       elapsed = 0;
       last = 0;
       phase = "";
       intro.hidden = false;
-      root.classList.remove("akac-entered", "akac-revealing");
+      root.classList.remove(
+        "akac-entered",
+        "akac-revealing",
+        "akac-awaiting-open",
+      );
       root.classList.add("akac-opening");
       root.style.setProperty("--akac-intro-height", `${window.innerHeight}px`);
       invitation.inert = true;
@@ -227,10 +279,16 @@
       }
     }
     const onSkip = () => finish();
+    const onOpen = () => {
+      if (!awaitingOpen || removed) return;
+      // El audio y el libro se disparan dentro del mismo clic/toque.
+      start(false, true);
+    };
     const onKey = (event) => {
       if (event.key === "Escape") finish();
       if (event.key === "Tab") {
         const focusable = [
+          awaitingOpen ? openBook : null,
           skip,
           root.querySelector(".akac-motion-toggle"),
         ].filter(Boolean);
@@ -247,27 +305,31 @@
       if (!document.hidden) schedule();
     };
     const onResize = () => {
-      if (active)
+      if (active || awaitingOpen)
         root.style.setProperty(
           "--akac-intro-height",
           `${window.innerHeight}px`,
         );
     };
+    openBook.addEventListener("click", onOpen);
     skip.addEventListener("click", onSkip);
     intro.addEventListener("keydown", onKey);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("resize", onResize, { passive: true });
     return {
+      prepare,
       start,
       finish,
       setPaused,
-      isActive: () => active,
+      isActive: () => active || awaitingOpen,
       destroy() {
         removed = true;
         epoch++;
         active = false;
+        awaitingOpen = false;
         clearTimeout(assetTimer);
         cancelAnimationFrame(raf);
+        openBook.removeEventListener("click", onOpen);
         skip.removeEventListener("click", onSkip);
         intro.removeEventListener("keydown", onKey);
         document.removeEventListener("visibilitychange", onVisibility);

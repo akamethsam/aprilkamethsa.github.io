@@ -33,6 +33,8 @@
     const effects = A.createEffects(root, c);
     book = A.createBook(root, c, {
       motionEnabled: () => !paused,
+      // La reproducción se solicita exactamente cuando comienza la apertura.
+      onStart: () => window.APRIL_MUSIC?.playFromBook?.(),
       onReveal: () => effects.burst(),
       onFinish: () => effects.refresh(),
     });
@@ -68,8 +70,13 @@
     motion.addEventListener("keydown", modalKeys);
     const disposeRsvp = A.initRsvp(root, c, () => effects.burst());
     setMotion(paused);
-    if (intro && (c.book.autoplay || forceIntro) && !paused) book.start();
-    else {
+    if (intro && (c.book.autoplay || forceIntro) && !paused) {
+      // Con música, mostramos primero el libro cerrado: el toque del invitado
+      // autoriza el sonido y arranca la animación en el mismo gesto.
+      if (c.music?.enabled && c.music?.startWithBook !== false && !forceIntro)
+        book.prepare();
+      else book.start();
+    } else {
       book.finish();
       if (preserveScroll) window.scrollTo({ top: scroll, behavior: "instant" });
     }

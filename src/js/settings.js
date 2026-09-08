@@ -100,6 +100,23 @@
       ? (raw.theme?.accent ?? c.theme.accent)
       : "#743751";
 
+    // Música local. Solo admite rutas seguras del propio proyecto.
+    const music = raw.music && typeof raw.music === "object" ? raw.music : {};
+    if (typeof music.enabled === "boolean") c.music.enabled = music.enabled;
+    if (typeof music.loop === "boolean") c.music.loop = music.loop;
+    if (typeof music.startWithBook === "boolean")
+      c.music.startWithBook = music.startWithBook;
+    const audioSrc = String(music.src ?? c.music.src ?? "").trim();
+    c.music.src = /^(?:assets\/audio\/)[A-Za-z0-9._-]+\.(?:mp3|m4a|ogg|wav)$/i.test(
+      audioSrc,
+    )
+      ? audioSrc
+      : "assets/audio/princesse.mp3";
+    const musicVolume = Number(music.volume ?? c.music.volume);
+    c.music.volume = Number.isFinite(musicVolume)
+      ? A.clamp(musicVolume, 0, 1)
+      : 0.35;
+
     // Solo se admite un correo o identificador público; el dominio FormSubmit es fijo.
     const rsvp = raw.rsvp || {};
     c.rsvp.mode = (rsvp.mode ?? c.rsvp.mode) === "live" ? "live" : "demo";
