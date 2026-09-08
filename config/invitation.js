@@ -89,7 +89,7 @@ window.APRIL_CONFIG = {
   music: {
     enabled: true,
     src: "assets/audio/princesse.mp3",
-    volume: 0.35,
+    volume: 0.15,
     loop: true,
     startWithBook: true,
   },
