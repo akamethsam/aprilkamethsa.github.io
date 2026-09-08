@@ -84,10 +84,11 @@ window.APRIL_CONFIG = {
   },
 
   // 08 · MÚSICA DE FONDO
-music: {
+    music: {
   enabled: true,
-  src: "assets/audio/musica-april.mp3",
+  src: "assets/audio/princesse.mp3",
   volume: 0.35,
   loop: true
 },
+
 };
