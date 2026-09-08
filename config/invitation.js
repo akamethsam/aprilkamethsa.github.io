@@ -48,7 +48,7 @@ window.APRIL_CONFIG = {
     subtitle: "Mi bautizo y primer añito",
     cover: "assets/images/libro-portada-crema.webp", // Portada completa con marco.
     spine: "assets/images/libro-lomo-crema.webp", // Textura del lomo.
-    image: "", // SOLO EL CENTRO: "assets/images/april.jpg".
+    image: "assets/images/april.jpg", // SOLO EL CENTRO: "assets/images/april.jpg".
     imageAlt: "April, la protagonista de este cuento",
     imagePosition: "50% 50%", // Encuadre horizontal/vertical, ej. "50% 30%".
     duration: 11, // Segundos entre 6 y 20.
@@ -72,7 +72,7 @@ window.APRIL_CONFIG = {
     formsubmitRecipient: "akamethsam@gmail.com",
     // WhatsApp DE LA FAMILIA: código de país y número, solo dígitos. Vacío = oculto.
     // El número del invitado se recoge por separado en el formulario.
-    whatsappNumber: "", // ← COLOCA AQUÍ TU NÚMERO: código de país + número, SIN + ni espacios.
+    whatsappNumber: "51953119385", // ← COLOCA AQUÍ TU NÚMERO: código de país + número, SIN + ni espacios.
     // Ejemplo de formato para Perú: "51912345678". No se usa hasta que lo escribas.
     eventLabel:
       "el bautizo y primer cumpleaños de April Kamethsa, el 22 de noviembre",
