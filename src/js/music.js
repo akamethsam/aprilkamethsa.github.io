@@ -35,7 +35,7 @@
   const configuredVolume = Number(music.volume);
   audio.volume = Number.isFinite(configuredVolume)
     ? Math.min(1, Math.max(0, configuredVolume))
-    : 0.35;
+    : 0.15;
 
   // Referencia pública para futuras funciones (por ejemplo, un botón Música/Silencio).
   window.APRIL_AUDIO = audio;
