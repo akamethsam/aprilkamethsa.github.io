@@ -60,7 +60,7 @@
             <article class="akac-event akac-reveal"><div class="akac-event-number">CAPÍTULO I</div><span class="akac-event-icon">${icon("cross", 30)}</span><h3>Mi bautizo</h3><p class="akac-event-line">Una bendición que me acompañará siempre</p><p class="akac-time">${esc(timeText(c.baptismTime || "11:30"))}</p>${venue(c.baptismVenue, c.baptismAddress, c.baptismMap)}</article>
             <div class="akac-events-divider" aria-hidden="true">${icon("star", 22)}</div>
             <!-- El corte de pelo es parte del día, pero no tiene un horario independiente. -->
-            <article class="akac-event akac-event--haircut akac-reveal"><div class="akac-event-number">CAPÍTULO II</div><span class="akac-event-icon">${icon("scissors", 32)}</span><h3>Corte de pelo</h3><p class="akac-event-line">Un pequeño gran momento para recordar toda la vida</p><p class="akac-haircut-note">UN RECUERDO PARA SIEMPRE</p></article>
+            <article class="akac-event akac-event--haircut akac-reveal"><div class="akac-event-number">CAPÍTULO II</div><span class="akac-event-icon">${icon("scissors", 32)}</span><h3>Corte de pelo</h3><p class="akac-event-line">Un pequeño gran momento para recordar toda la vida</p><p class="akac-haircut-note">Salon de eventos Alameda Real</p></article>
             <div class="akac-events-divider" aria-hidden="true">${icon("star", 22)}</div>
             <article class="akac-event akac-reveal"><div class="akac-event-number">CAPÍTULO III</div><span class="akac-event-icon">${icon("crown", 32)}</span><h3>Mi primer añito</h3><p class="akac-event-line">Un castillo lleno de risas y mucho amor</p><p class="akac-time">${esc(timeText(c.birthdayTime || "13:30"))}</p>${venue(c.birthdayVenue, c.birthdayAddress, c.birthdayMap)}</article>
           </div>
