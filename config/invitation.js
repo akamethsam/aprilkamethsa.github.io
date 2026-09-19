@@ -9,7 +9,7 @@ window.APRIL_CONFIG = {
   schemaVersion: 3,
 
   // 01 · PROTAGONISTA Y FECHA. El año 2026 aún está pendiente de confirmar.
-  name: "April Kamethsa",
+  name: "April Kamethsa Mendoza Barrantes",
   date: "2026-11-22", // año-mes-día
   dateProvisional: true, // Aviso en el taller, invisible para los invitados.
   timezoneOffset: "-05:00", // Hora de Perú.
