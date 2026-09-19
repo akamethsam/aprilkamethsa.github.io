@@ -13,15 +13,15 @@ window.APRIL_CONFIG = {
   date: "2026-11-22", // año-mes-día
   dateProvisional: true, // Aviso en el taller, invisible para los invitados.
   timezoneOffset: "-05:00", // Hora de Perú.
-  baptismTime: "10:30", // 11:30 a. m. (formato de 24 horas).
+  baptismTime: "11:30", // 11:30 a. m. (formato de 24 horas).
   birthdayTime: "12:30", // 1:30 p. m.
 
   // 02 · LUGARES. Los mapas son enlaces opcionales HTTP/HTTPS.
-  baptismVenue: "Lugar por confirmar",
-  baptismAddress: "",
-  baptismMap: "",
+  baptismVenue: "Capilla San Francisco",
+  baptismAddress: "Psj San Pablo - Plazuela San Martin Cajamarca",
+  baptismMap: "https://maps.app.goo.gl/8Bd8DrWUuZvNdsJE9",
   birthdayVenue: "Salon de eventos 'Alameda Real' ",
-  birthdayAddress: "",
+  birthdayAddress: "Al costado del grifo Huacariz, 0600, Cajamarca",
   birthdayMap: "https://maps.app.goo.gl/AH9j7coXYSEvN8wG6",
 
   // 03 · TEXTOS. Escribe texto normal, sin etiquetas HTML.
